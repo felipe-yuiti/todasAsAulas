@@ -7,32 +7,51 @@
 
 import UIKit
 
+var array : [String] = []
+
+struct tupla {
+    var valor : String?
+    var valor1 : String?
+    
+//    init (valor: String, valor1: String){
+//        self.valor = valor
+//        self.valor1 = valor1
+//    }
+}
+
+
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "felipe \(indexPath.row)"
+        let arrays = array[indexPath.row]
+        cell.textLabel?.text = arrays
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quantidade
+        return array.count
     }
     
-    var quantidade = 0
-    
     func showAlertWithTextField(){
-          let alertController = UIAlertController(title: "Add new tag", message: nil, preferredStyle: .alert)
-          let confirmAction = UIAlertAction(title: "Add", style: .default) { (_) in
+          let alertController = UIAlertController(title: "Add new tag",
+                                                  message: nil,
+                                                  preferredStyle: .alert)
+        
+          let confirmAction = UIAlertAction(title: "Add",style: .default){ _ in
               if let txtField = alertController.textFields?.first, let text = txtField.text {
-                  // operations
-                return print("Text==>" + text)
+                // operations
+                  array += [text]
+
+                  self.tableView.reloadData()
+                  return print("Text==>" + text)
               }
           }
-          let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
-          alertController.addTextField { (textField) in
-              textField.placeholder = "Tag"
-          }
+        
+          let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+          alertController.addTextField { textField in textField.placeholder = "Titulo"}
+          alertController.addTextField { textField in textField.placeholder = "Descrição"}
+        
           alertController.addAction(confirmAction)
           alertController.addAction(cancelAction)
           self.present(alertController, animated: true, completion: nil)
@@ -41,9 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func press(_ sender: Any) {
-        quantidade += 1
         showAlertWithTextField()
-        tableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
