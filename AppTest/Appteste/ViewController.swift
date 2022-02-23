@@ -7,8 +7,6 @@
 
 import UIKit
 
-var array : [String] = []
-
 struct tupla {
     var valor : String?
     var valor1 : String?
@@ -18,9 +16,9 @@ struct tupla {
 //        self.valor1 = valor1
 //    }
 }
-
-
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var array : [String] = []
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
@@ -41,7 +39,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
           let confirmAction = UIAlertAction(title: "Add",style: .default){ _ in
               if let txtField = alertController.textFields?.first, let text = txtField.text {
                 // operations
-                  array += [text]
+                  self.array += [text]
 
                   self.tableView.reloadData()
                   return print("Text==>" + text)
